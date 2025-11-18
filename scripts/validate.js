@@ -9,10 +9,8 @@ const rootDir = join(__dirname, "..");
 
 const ajv = new Ajv({ allErrors: true });
 
-// Convert URL to local path
 function urlToLocalPath(url) {
   if (typeof url !== "string") return null;
-  // Match pattern: https://mavdol.github.io/pankai-public-registry/...
   const match = url.match(
     /https:\/\/mavdol\.github\.io\/pankai-public-registry\/(.+)$/
   );
@@ -22,7 +20,6 @@ function urlToLocalPath(url) {
   return null;
 }
 
-// Validate schema file exists and is valid JSON
 function validateSchemaFile(schemaPath, schemaName) {
   if (!existsSync(schemaPath)) {
     console.error(`❌ Schema file not found: ${schemaName}`);
@@ -40,7 +37,6 @@ function validateSchemaFile(schemaPath, schemaName) {
   }
 }
 
-// Recursively find all URL references in an object
 function findSchemaUrls(obj, urls = []) {
   if (typeof obj === "string") {
     const localPath = urlToLocalPath(obj);
@@ -55,7 +51,6 @@ function findSchemaUrls(obj, urls = []) {
   return urls;
 }
 
-// Load schemas
 const registrySchema = JSON.parse(
   readFileSync(join(rootDir, "schemas", "registry.schema.json"), "utf8")
 );
@@ -63,7 +58,6 @@ const providerSchema = JSON.parse(
   readFileSync(join(rootDir, "schemas", "provider.schema.json"), "utf8")
 );
 
-// Validate registry.json
 console.log("Validating registry.json...");
 const registry = JSON.parse(
   readFileSync(join(rootDir, "registry.json"), "utf8")
@@ -77,7 +71,6 @@ if (!validateRegistry(registry)) {
 }
 console.log("✅ registry.json is valid\n");
 
-// Validate provider JSON files
 console.log("Validating provider files...");
 const providersDir = join(rootDir, "providers");
 const validateProvider = ajv.compile(providerSchema);
@@ -101,7 +94,6 @@ for (const providerName of readdirSync(providersDir)) {
       }
     }
 
-    // Validate provider structure
     if (!validateProvider(provider)) {
       console.error(`❌ ${providerName}.json validation failed:`);
       console.error(JSON.stringify(validateProvider.errors, null, 2));
