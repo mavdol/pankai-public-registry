@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "input_tokens": {
+      "type": "integer",
+      "description": "The total number of tokens across the provided list of messages, system prompt, and tools."
+    },
+    "context_management": {
+      "type": ["object", "null"],
+      "description": "Information about context management applied to the message."
+    }
+  },
+  "required": ["input_tokens"]
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "description": "Array of results from the Message Batch. The response is streamed as a .jsonl file where each line is a JSON object containing the result of a single request in the Message Batch. Results are not guaranteed to be in the same order as requests.",
+  "items": {
+    "type": "object",
+    "description": "A single result from the Message Batch. Each line in the .jsonl file contains one of these objects.",
+    "properties": {
+      "custom_id": {
+        "type": "string",
+        "description": "Developer-provided ID created for each request in a Message Batch. Useful for matching results to requests, as results may be given out of request order. Must be unique for each request within the Message Batch."
+      },
+      "result": {
+        "type": "object",
+        "description": "Processing result for this request. Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.",
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["succeeded"],
+                "description": "Indicates that the request completed successfully."
+              },
+              "message": {
+                "$ref": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages-response.schema.json"
+              }
+            },
+            "required": ["type", "message"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["errored"],
+                "description": "Indicates that the request encountered an error during processing."
+              },
+              "error": {
+                "$ref": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json#/properties/error"
+              }
+            },
+            "required": ["type", "error"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["canceled"],
+                "description": "Indicates that the request was canceled."
+              }
+            },
+            "required": ["type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["expired"],
+                "description": "Indicates that the request expired before processing completed."
+              }
+            },
+            "required": ["type"]
+          }
+        ]
+      }
+    },
+    "required": ["custom_id", "result"]
+  }
+}

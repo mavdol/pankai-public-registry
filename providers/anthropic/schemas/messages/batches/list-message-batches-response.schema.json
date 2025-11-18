@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/paginated-list-response.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "List of Message Batches. Most recently created batches are returned first.",
+          "items": {
+            "$ref": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/message-batch-response.schema.json"
+          }
+        }
+      },
+      "required": ["data"]
+    }
+  ]
+}

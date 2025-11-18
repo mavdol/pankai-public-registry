@@ -1,0 +1,20 @@
+{
+  "name": "pankai-public-registry",
+  "version": "0.1.0",
+  "description": "Public registry for AI model providers",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.js"
+  },
+  "keywords": [
+    "ai",
+    "registry",
+    "models",
+    "providers"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "ajv": "^8.12.0"
+  }
+}

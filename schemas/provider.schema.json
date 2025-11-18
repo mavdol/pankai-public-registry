@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["provider", "type"],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "description": "Provider identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["local", "remote"],
+      "description": "Provider type: local for local models, remote for API-based providers"
+    },
+    "models": {
+      "type": "array",
+      "description": "Array of models (for local providers)",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "default": {
+            "type": "string"
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "filename": {
+                  "type": "string"
+                },
+                "downloadUrl": {
+                  "type": "string"
+                },
+                "quantization": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "api": {
+      "type": "array",
+      "description": "Array of API endpoints (for remote providers)",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string",
+            "enum": ["get", "post", "put", "patch", "delete"]
+          },
+          "headers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "bodySchema": {
+            "description": "Body schema can be a URL string (with {{baseUrl}} placeholder) or a JSON Schema object (with optional $ref/allOf for extending)",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          },
+          "responseSchema": {
+            "description": "Response schema can be a URL string (with {{baseUrl}} placeholder) or a JSON Schema object",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          },
+          "errorSchema": {
+            "description": "Error schema can be a URL string (with {{baseUrl}} placeholder) or a JSON Schema object",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "local"
+          }
+        }
+      },
+      "then": {
+        "required": ["models"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "remote"
+          }
+        }
+      },
+      "then": {
+        "required": ["api"]
+      }
+    }
+  ]
+}

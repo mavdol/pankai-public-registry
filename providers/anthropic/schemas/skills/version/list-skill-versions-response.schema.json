@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "List of skill versions.",
+      "items": {
+        "$ref": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/skills/version/create-skill-version-response.schema.json"
+      }
+    },
+    "has_more": {
+      "type": "boolean",
+      "description": "Indicates if there are more results in the requested page direction."
+    },
+    "next_page": {
+      "type": ["string", "null"],
+      "description": "Token to provide in as page in the subsequent request to retrieve the next page of data."
+    }
+  },
+  "required": ["data", "has_more", "next_page"]
+}

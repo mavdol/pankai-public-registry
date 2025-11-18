@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 datetime string representing when the file was created."
+    },
+    "downloadable": {
+      "type": "boolean",
+      "description": "Whether the file can be downloaded.",
+      "default": false
+    },
+    "filename": {
+      "type": "string",
+      "description": "Original filename of the uploaded file.",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique object identifier. The format and length of IDs may change over time."
+    },
+    "mime_type": {
+      "type": "string",
+      "description": "MIME type of the file.",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "size_bytes": {
+      "type": "integer",
+      "description": "Size of the file in bytes.",
+      "minimum": 0
+    },
+    "type": {
+      "type": "string",
+      "enum": ["file"],
+      "description": "Object type. For files, this is always 'file'.",
+      "default": "file"
+    }
+  },
+  "required": [
+    "created_at",
+    "filename",
+    "id",
+    "mime_type",
+    "size_bytes",
+    "type"
+  ]
+}

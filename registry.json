@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "providers": [
+    {
+      "provider": "llama",
+      "url": "https://mavdol.github.io/pankai-public-registry/providers/llama.json"
+    },
+    {
+      "provider": "anthropic",
+      "url": "https://mavdol.github.io/pankai-public-registry/providers/anthropic.json"
+    }
+  ]
+}

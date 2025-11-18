@@ -1,0 +1,51 @@
+name: Validate and Deploy Registry
+
+on:
+  pull_request:
+    paths:
+      - "registry.json"
+      - "providers/**"
+      - "schemas/**"
+      - "scripts/**"
+  push:
+    paths:
+      - "registry.json"
+      - "providers/**"
+      - "schemas/**"
+      - "scripts/**"
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install AJV
+        run: npm install ajv
+      - name: Validate registry
+        run: node scripts/validate.js
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

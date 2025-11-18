@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "The model that will complete your prompt."
+    },
+    "messages": {
+      "type": "array",
+      "description": "Input messages. Our models are trained to operate on alternating user and assistant conversational turns. When creating a new Message, you specify the prior conversational turns with the messages parameter, and the model then generates the next Message in the conversation. Consecutive user or assistant turns in your request will be combined into a single turn. Each input message must be an object with a role and content. You can specify a single user-role message, or you can include multiple user and assistant messages. If the final message uses the assistant role, the response content will continue immediately from the content in that message. There is a limit of 100,000 messages in a single request.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "The conversational role of the message. Must be either 'user' or 'assistant'."
+          },
+          "content": {
+            "type": "array",
+            "description": "The content of the message. May be either a single string or an array of content blocks, where each block has a specific type. Using a string for content is shorthand for an array of one content block of type 'text'.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "The text content of the message block."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "maxTokens": {
+      "type": "number",
+      "description": "The maximum number of tokens to generate before stopping. Note that our models may stop before reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate. Different models have different maximum values for this parameter.",
+      "minimum": 1
+    },
+    "container": {
+      "type": "array",
+      "description": "Container identifier for reuse across requests. Container parameters with skills to be loaded.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The container identifier."
+          },
+          "skills": {
+            "type": "array",
+            "description": "Array of skills to be loaded in the container.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "skillId": {
+                  "type": "string",
+                  "description": "The identifier of the skill to load."
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["anthropic", "custom"],
+                  "description": "The type of skill: 'anthropic' for Anthropic-provided skills, 'custom' for custom skills."
+                },
+                "version": {
+                  "type": "string",
+                  "description": "The version of the skill to use."
+                }
+              },
+              "required": ["skillId", "type"]
+            }
+          }
+        }
+      }
+    },
+    "contextManagement": {
+      "type": "object",
+      "description": "Context management configuration. This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["local", "remote"],
+          "description": "The type of context management: 'local' for local context management, 'remote' for remote context management."
+        },
+        "edits": {
+          "type": "array",
+          "description": "Array of context edits to apply.",
+          "items": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      }
+    },
+    "mcp_servers": {
+      "type": "array",
+      "description": "MCP servers to be utilized in this request. Maximum of 20 servers.",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the MCP server."
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of MCP server."
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the MCP server."
+          },
+          "authorizationToken": {
+            "type": "string",
+            "description": "The authorization token for the MCP server."
+          },
+          "toolConfiguration": {
+            "type": "object",
+            "description": "Configuration for tools available from this MCP server.",
+            "properties": {
+              "allowedTools": {
+                "type": "array",
+                "description": "Array of tool names that are allowed to be used from this server.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether tools from this server are enabled."
+              }
+            }
+          }
+        },
+        "required": ["name", "type", "url"]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "An object describing metadata about the request.",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The user ID associated with this request."
+        }
+      }
+    },
+    "serviceTier": {
+      "type": "string",
+      "enum": ["auto", "standard_only"],
+      "description": "Determines whether to use priority capacity (if available) or standard capacity for this request. Anthropic offers different levels of service for your API requests. 'auto' will use priority capacity if available, 'standard_only' will only use standard capacity."
+    },
+    "stopSequences": {
+      "type": "array",
+      "description": "Custom text sequences that will cause the model to stop generating. Our models will normally stop when they have naturally completed their turn, which will result in a response stop_reason of 'end_turn'. If you want the model to stop generating when it encounters custom strings of text, you can use the stop_sequences parameter.",
+      "items": {
+        "type": "string",
+        "description": "A custom stop sequence string."
+      }
+    },
+    "stream": {
+      "type": "boolean",
+      "description": "Whether to incrementally stream the response using server-sent events. When streaming, the response will be sent as a series of events rather than a single complete response."
+    },
+    "system": {
+      "type": "string",
+      "description": "System prompt. A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our guide to system prompts."
+    },
+    "temperature": {
+      "type": "number",
+      "min": 0,
+      "max": 1,
+      "description": "Amount of randomness injected into the response. Defaults to 1.0. Ranges from 0.0 to 1.0. Use temperature closer to 0.0 for analytical / multiple choice, and closer to 1.0 for creative and generative tasks. Note that even with temperature of 0.0, the results will not be fully deterministic."
+    },
+    "thinking": {
+      "type": "object",
+      "description": "Configuration for thinking mode, which allows Claude to show its reasoning process.",
+      "properties": {
+        "budgetTokens": {
+          "type": "number",
+          "min": 1024,
+          "description": "The maximum number of tokens to allocate for thinking. Minimum value is 1024."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of thinking mode to enable."
+        }
+      },
+      "required": ["type"]
+    },
+    "toolChoice": {
+      "type": "object",
+      "description": "Controls which (if any) tool is called by the model. 'none' means the model will not call any tools and instead generates a message. 'auto' means the model can pick between generating a message or calling one or more tools. 'any' means the model must call at least one tool. 'tool' means the model must call a specific tool by name.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the tool to force the model to use. Required when type is 'tool'."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["auto", "any", "tool", "none"],
+          "description": "The tool choice strategy: 'auto' (model decides), 'any' (must use at least one tool), 'tool' (must use specific tool), or 'none' (no tools)."
+        },
+        "disableParallelToolUse": {
+          "type": "boolean",
+          "description": "Whether to disable parallel tool use. When false, the model can call multiple tools in parallel."
+        }
+      },
+      "required": ["type"]
+    },
+    "tools": {
+      "type": "array",
+      "description": "Definitions of tools that the model may use. If you include tools in your request, the model may return tool_use content blocks that represent the model's request to use those tools. Any tool_use blocks must be resolved by running the tool you specified and returning tool_result content blocks back to the model. Each tool definition includes a name, optional description, and input_schema (JSON schema for the tool input shape that the model will produce in tool_use output content blocks). Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Optional unique identifier for the tool."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the tool."
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional, but strongly-recommended description of the tool."
+          },
+          "inputSchema": {
+            "description": "JSON Schema for the tool input. Can be a URL to a JSON Schema (e.g., http://json-schema.org/draft-07/schema#) or an inline schema object.",
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "URL to a JSON Schema definition"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON Schema object"
+              }
+            ]
+          },
+          "cacheControl": {
+            "type": "object",
+            "description": "Cache control configuration for tool results.",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["local", "remote"],
+                "description": "The type of cache: 'local' for local caching, 'remote' for remote caching."
+              },
+              "ttl": {
+                "type": "string",
+                "enum": ["5m", "1h"],
+                "description": "Time to live for cached results: '5m' for 5 minutes, '1h' for 1 hour."
+              }
+            }
+          }
+        }
+      }
+    },
+    "topK": {
+      "type": "number",
+      "min": 0,
+      "description": "Only sample from the top K options for each subsequent token. Used to remove 'long tail' low probability responses. Recommended for advanced use cases only. You usually only need to use temperature."
+    },
+    "topP": {
+      "type": "number",
+      "min": 0,
+      "max": 1,
+      "description": "Use nucleus sampling. In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by top_p. You should either alter temperature or top_p, but not both. Recommended for advanced use cases only. You usually only need to use temperature."
+    }
+  },
+  "required": ["model", "messages", "maxTokens"]
+}

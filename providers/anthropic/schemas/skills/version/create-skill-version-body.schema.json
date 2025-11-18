@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Multipart form data for creating a skill version. All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.",
+  "properties": {
+    "files": {
+      "type": ["array", "null"],
+      "description": "Files to upload for the skill. All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.",
+      "items": {
+        "type": "string",
+        "format": "binary",
+        "description": "A file to upload for the skill."
+      }
+    }
+  }
+}

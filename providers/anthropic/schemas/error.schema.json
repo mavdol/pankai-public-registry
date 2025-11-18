@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "object",
+      "description": "An object containing details about the error that occurred.",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "A human-readable description of the error."
+        },
+        "type": {
+          "type": "string",
+          "description": "A machine-readable identifier for the type of error. Possible values include: 'invalid_request_error' (there was an issue with the format or content of your request), 'authentication_error' (there's an issue with your API key), 'permission_error' (your API key does not have permission to use the specified resource), 'not_found_error' (the requested resource was not found), 'request_too_large' (request exceeds the maximum allowed number of bytes), 'rate_limit_error' (your account has hit a rate limit), 'api_error' (an unexpected error has occurred internal to Anthropic's systems), 'overloaded_error' (the API is temporarily overloaded).",
+          "enum": [
+            "invalid_request_error",
+            "authentication_error",
+            "permission_error",
+            "not_found_error",
+            "request_too_large",
+            "rate_limit_error",
+            "api_error",
+            "overloaded_error"
+          ]
+        }
+      },
+      "required": ["message", "type"]
+    },
+    "request_id": {
+      "type": "string",
+      "description": "A unique identifier for the request, useful for debugging and tracking."
+    },
+    "type": {
+      "type": "string",
+      "description": "Indicates the type of the response, which is 'error' in this case.",
+      "enum": ["error"]
+    }
+  },
+  "required": ["error", "type"]
+}

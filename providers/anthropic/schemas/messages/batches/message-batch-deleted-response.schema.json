@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ID of the Message Batch that was deleted."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["message_batch_deleted"],
+      "description": "Deleted object type. For Message Batches, this is always 'message_batch_deleted'.",
+      "default": "message_batch_deleted"
+    }
+  },
+  "required": ["id", "type"]
+}

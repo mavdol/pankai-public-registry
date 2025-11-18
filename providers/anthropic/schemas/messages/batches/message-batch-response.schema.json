@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "archived_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "RFC 3339 datetime string representing the time at which the Message Batch was archived and its results became unavailable."
+    },
+    "cancel_initiated_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "RFC 3339 datetime string representing the time at which cancellation was initiated for the Message Batch. Specified only if cancellation was initiated."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 datetime string representing the time at which the Message Batch was created."
+    },
+    "ended_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "RFC 3339 datetime string representing the time at which processing for the Message Batch ended. Specified only once processing ends. Processing ends when every request in a Message Batch has either succeeded, errored, canceled, or expired."
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 datetime string representing the time at which the Message Batch will expire and end processing, which is 24 hours after creation."
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique object identifier. The format and length of IDs may change over time."
+    },
+    "processing_status": {
+      "type": "string",
+      "enum": ["in_progress", "canceling", "ended"],
+      "description": "Processing status of the Message Batch. 'in_progress' means the batch is currently being processed. 'canceling' means cancellation has been initiated. 'ended' means processing has completed (all requests have either succeeded, errored, canceled, or expired)."
+    },
+    "request_counts": {
+      "type": "object",
+      "description": "Tallies requests within the Message Batch, categorized by their status. Requests start as 'processing' and move to one of the other statuses only once processing of the entire batch ends. The sum of all values always matches the total number of requests in the batch.",
+      "properties": {
+        "canceled": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of requests that were canceled."
+        },
+        "errored": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of requests that encountered an error during processing."
+        },
+        "expired": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of requests that expired before processing completed."
+        },
+        "processing": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of requests currently being processed."
+        },
+        "succeeded": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of requests that completed successfully."
+        }
+      },
+      "required": ["canceled", "errored", "expired", "processing", "succeeded"]
+    },
+    "results_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "URL to a .jsonl file containing the results of the Message Batch requests. Specified only once processing ends. Results in the file are not guaranteed to be in the same order as requests. Use the custom_id field to match results to requests."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["message_batch"],
+      "description": "Object type. For Message Batches, this is always 'message_batch'.",
+      "default": "message_batch"
+    }
+  }
+}

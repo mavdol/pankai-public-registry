@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "List of skills.",
+      "items": {
+        "$ref": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/skills/create-skill-response.schema.json"
+      }
+    },
+    "has_more": {
+      "type": "boolean",
+      "description": "Whether there are more results available. If true, there are additional results that can be fetched using the next_page token."
+    },
+    "next_page": {
+      "type": ["string", "null"],
+      "description": "Token for fetching the next page of results. If null, there are no more results available. Pass this value to the page parameter in the next request to get the next page."
+    }
+  },
+  "required": ["data", "has_more", "next_page"]
+}
