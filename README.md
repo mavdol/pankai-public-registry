@@ -16,7 +16,7 @@ The registry is split into provider-specific files for better maintainability an
     registry.schema.json    # Schema for main registry
     provider.schema.json    # Schema for provider files
   scripts/
-    validate.js         # Validation script
+    validate.ts         # Validation script
 ```
 
 ## Structure
@@ -35,9 +35,12 @@ Each provider has its own JSON file containing:
 Validate the registry locally:
 
 ```bash
-npm install ajv
-node scripts/validate.js
+deno task validate
+# or
+deno run --allow-read scripts/validate.ts
 ```
+
+> **Note:** You need to have [Deno installed](https://deno.land). No `npm install` or `node_modules` required!
 
 The validation script:
 

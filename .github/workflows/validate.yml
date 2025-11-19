@@ -21,14 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
         with:
-          node-version: 22
-      - name: Install AJV
-        run: npm install ajv
+          deno-version: v1.x
       - name: Validate registry
-        run: node scripts/validate.js
+        run: deno task validate
 
   deploy:
     needs: validate

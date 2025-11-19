@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "validate": "deno run --allow-read scripts/validate.ts"
+  },
+  "imports": {
+    "ajv": "npm:ajv@^8.12.0"
+  }
+}
