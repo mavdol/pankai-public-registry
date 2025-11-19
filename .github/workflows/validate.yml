@@ -29,6 +29,7 @@ jobs:
         run: deno task validate
 
   deploy:
+    environment: production
     needs: validate
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

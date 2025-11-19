@@ -98,9 +98,8 @@ for (const entry of Deno.readDirSync(providersDir)) {
   try {
     const provider = JSON.parse(Deno.readTextFileSync(providerJsonPath));
 
-    // Find all schema URL references and validate they exist locally
     const schemaUrls = findSchemaUrls(provider);
-    for (const { url, localPath } of schemaUrls) {
+    for (const { localPath } of schemaUrls) {
       const relativePath = localPath.replace(rootDir + "/", "");
       if (!validateSchemaFile(localPath, relativePath)) {
         hasErrors = true;
