@@ -3,11 +3,12 @@
   "providers": [
     {
       "provider": "llama",
-      "url": "https://mavdol.github.io/pankai-public-registry/providers/llama/llama.json"
+      "type": "local",
+      "manifest": "https://mavdol.github.io/pankai-public-registry/providers/llama/llama.json"
     },
     {
       "provider": "anthropic",
-      "url": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/anthropic.json"
+      "manifest": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/anthropic.json"
     }
   ]
 }

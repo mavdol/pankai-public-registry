@@ -1,11 +1,10 @@
 {
-  "provider": "llama",
   "type": "local",
   "models": [
     {
       "id": "llama3.2",
       "default": "llama3.2:3b",
-      "models": [
+      "variants": [
         {
           "id": "llama3.2:3b-q4_k_m",
           "shortId": "llama3.2:3b",

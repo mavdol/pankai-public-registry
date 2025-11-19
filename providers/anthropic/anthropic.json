@@ -1,16 +1,15 @@
 {
-  "provider": "anthropic",
   "type": "remote",
-  "api": [
+  "metadata": {
+    "name": "Anthropic",
+    "version": "2023-06-01"
+  },
+  "endpoints": [
     {
       "id": "messages",
       "url": "https://api.anthropic.com/v1/messages",
       "method": "post",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "content-type": "application/json"
-      },
+      "headers": ["anthropic-version", "x-api-key", "content-type"],
       "bodySchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/messages-body.schema.json",
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/messages-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
@@ -19,11 +18,7 @@
       "id": "count-messages-tokens",
       "url": "https://api.anthropic.com/v1/messages/count_tokens",
       "method": "post",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "Content-Type": "application/json"
-      },
+      "headers": ["anthropic-version", "x-api-key", "content-type"],
       "bodySchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/count-messages-tokens-body.schema.json",
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/count-messages-tokens-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
@@ -32,10 +27,7 @@
       "id": "list-models",
       "url": "https://api.anthropic.com/v1/models",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/models/list-models-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -43,10 +35,7 @@
       "id": "get-model",
       "url": "https://api.anthropic.com/v1/models/{{id}}",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "bodySchema": {
         "type": "string",
         "description": "The ID of the model to get."
@@ -58,11 +47,7 @@
       "id": "messages-batches",
       "url": "https://api.anthropic.com/v1/messages/batches",
       "method": "post",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "Content-Type": "application/json"
-      },
+      "headers": ["anthropic-version", "x-api-key", "content-type"],
       "bodySchema": {
         "allOf": [
           {
@@ -89,10 +74,7 @@
       "id": "retrive-message-batch",
       "url": "https://api.anthropic.com/v1/messages/batches/{{id}}",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/message-batch-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -100,10 +82,7 @@
       "id": "cancel-message-batch",
       "url": "https://api.anthropic.com/v1/messages/batches/{{id}}/cancel",
       "method": "post",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/message-batch-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -111,10 +90,7 @@
       "id": "retrieve-message-batch-results",
       "url": "https://api.anthropic.com/v1/messages/batches/{{id}}/results",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/message-batch-results-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -122,10 +98,7 @@
       "id": "list-message-batches",
       "url": "https://api.anthropic.com/v1/messages/batches",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/list-message-batches-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -133,10 +106,7 @@
       "id": "delete-message-batch",
       "url": "https://api.anthropic.com/v1/messages/batches/{{id}}",
       "method": "delete",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/messages/batches/message-batch-deleted-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -144,11 +114,7 @@
       "id": "create-file",
       "url": "https://api.anthropic.com/v1/files",
       "method": "post",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "anthropic-beta": "files-api-2025-04-14"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "bodySchema": {
         "type": "object",
         "description": "Multipart form data with file upload. The 'file' field contains the file to upload.",
@@ -168,11 +134,7 @@
       "id": "list-files",
       "url": "https://api.anthropic.com/v1/files",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "anthropic-beta": "files-api-2025-04-14"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "responseSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/files/list-files-response.schema.json",
       "errorSchema": "https://mavdol.github.io/pankai-public-registry/providers/anthropic/schemas/error.schema.json"
     },
@@ -180,11 +142,7 @@
       "id": "get-file-metadata",
       "url": "https://api.anthropic.com/v1/files/{{id}}",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "anthropic-beta": "files-api-2025-04-14"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "bodySchema": {
         "type": "string",
         "description": "The ID of the file to get metadata for."
@@ -196,11 +154,7 @@
       "id": "download-file",
       "url": "https://api.anthropic.com/v1/files/{{id}}/content",
       "method": "get",
-      "headers": {
-        "anthropic-version": "2023-06-01",
-        "x-api-key": "{{anthropic_api_key}}",
-        "anthropic-beta": "files-api-2025-04-14"
-      },
+      "headers": ["anthropic-version", "x-api-key"],
       "bodySchema": {
         "type": "string",
         "description": "The ID of the file to download."
